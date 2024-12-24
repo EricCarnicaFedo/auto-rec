@@ -33,9 +33,10 @@ local recruiting = false
 
 local function sendRecruitmentMessage()
     while recruiting do
-        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-            "Alguém gostaria de se juntar a uma comunidade de entrenched? Temos treinos todos os dias e batalhas no final de semana, sem contar os eventos valendo robux. (fale: 'Eu quero')", "All")
-        wait(60)
+        local A_1 = "Alguém gostaria de se juntar a uma comunidade de entrenched? Temos treinos todos os dias e batalhas no final de semana, sem contar os eventos valendo robux. (fale: 'Eu quero')"
+        local A_2 = "All"
+        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(A_1, A_2)
+        wait(60)  -- espera 1 minuto entre as mensagens
     end
 end
 
