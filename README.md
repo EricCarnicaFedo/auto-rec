@@ -1,13 +1,12 @@
-local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local player = Players.LocalPlayer
+local player = game.Players.LocalPlayer
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
 local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 300, 0, 150)
-mainFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
+mainFrame.Size = UDim2.new(0, 300, 0, 100)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -50)
 mainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 mainFrame.Active = true
 mainFrame.Draggable = true
@@ -22,8 +21,8 @@ toggleButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
 toggleButton.Parent = mainFrame
 
 local poweredByLabel = Instance.new("TextLabel")
-poweredByLabel.Size = UDim2.new(0, 250, 0, 30)
-poweredByLabel.Position = UDim2.new(0.5, -125, 1, -35)
+poweredByLabel.Size = UDim2.new(0, 250, 0, 20)
+poweredByLabel.Position = UDim2.new(0.5, -125, 1, -25)
 poweredByLabel.Text = "Powered by Erigcc2"
 poweredByLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 poweredByLabel.BackgroundTransparency = 1
@@ -33,17 +32,10 @@ local recruiting = false
 
 local function sendRecruitmentMessage()
     while recruiting do
-        local A_1 = "Alguém gostaria de se juntar a uma comunidade de entrenched? Temos treinos todos os dias e batalhas no final de semana, sem contar os eventos valendo robux. (fale: 'Eu quero')"
+        local A_1 = "Alguém gostaria de se juntar a uma comunidade de entrenched? Temos treinos todos os dias e batalhas no final de semana, sem contar eventos valendo robux. (fale: 'Eu quero')"
         local A_2 = "All"
         ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(A_1, A_2)
-        wait(60)  -- espera 1 minuto entre as mensagens
-    end
-end
-
-local function onPlayerMessage(message, speaker)
-    if string.lower(message) == "eu quero" then
-        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-            "@" .. speaker .. ", adicione Zlx0 no Discord para ser recrutado!", "All")
+        wait(60)
     end
 end
 
@@ -58,8 +50,4 @@ toggleButton.MouseButton1Click:Connect(function()
         toggleButton.Text = "🔴 Recrutamento Desativado"
         toggleButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
     end
-end)
-
-ReplicatedStorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(msgData)
-    onPlayerMessage(msgData.Message, msgData.FromSpeaker)
 end)
