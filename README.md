@@ -1,5 +1,6 @@
 local player = game.Players.LocalPlayer
 local chatService = game:GetService("Chat")
+local virtualUser = game:GetService("VirtualInputManager")
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
@@ -31,7 +32,16 @@ poweredByLabel.Parent = mainFrame
 local recruiting = false
 
 local function sendChatMessage(message)
-    chatService:Chat(player.Character, message, Enum.ChatColor.Blue)
+    -- Ação para abrir o chat
+    virtualUser:SendKeyEvent(true, Enum.KeyCode.Slash, false, nil)  -- Abre o chat
+    wait(0.2)
+    
+    -- Digitar a mensagem
+    virtualUser:SendTextInput(message)
+    wait(0.1)
+    
+    -- Enviar a mensagem
+    virtualUser:SendKeyEvent(true, Enum.KeyCode.Return, false, nil)
 end
 
 local function startRecruitment()
