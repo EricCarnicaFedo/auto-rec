@@ -1,4 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = game.Players.LocalPlayer
 
 local screenGui = Instance.new("ScreenGui")
@@ -30,12 +29,19 @@ poweredByLabel.Parent = mainFrame
 
 local recruiting = false
 
-local function sendRecruitmentMessage()
+local function sendChatMessage(message)
+    local virtualUser = game:GetService("VirtualInputManager")  -- Simula entrada do jogador
+    virtualUser:SendKeyEvent(true, Enum.KeyCode.Slash, false, nil)  -- Abre o chat
+    wait(0.2)
+    virtualUser:SendTextInput(message)  -- Digita a mensagem
+    wait(0.1)
+    virtualUser:SendKeyEvent(true, Enum.KeyCode.Return, false, nil)  -- Pressiona Enter para enviar
+end
+
+local function startRecruitment()
     while recruiting do
-        local A_1 = "Alguém gostaria de se juntar a uma comunidade de entrenched? Temos treinos todos os dias e batalhas no final de semana, sem contar eventos valendo robux. (fale: 'Eu quero')"
-        local A_2 = "All"
-        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(A_1, A_2)
-        wait(60)
+        sendChatMessage("Alguém gostaria de se juntar a uma comunidade de entrenched? Temos treinos todos os dias e batalhas no final de semana, sem contar eventos valendo robux. (fale: 'Eu quero')")
+        wait(60)  -- Espera 1 minuto para enviar novamente
     end
 end
 
@@ -45,7 +51,7 @@ toggleButton.MouseButton1Click:Connect(function()
     if recruiting then
         toggleButton.Text = "🟢 Recrutamento Ativado"
         toggleButton.BackgroundColor3 = Color3.fromRGB(0, 200, 0)
-        sendRecruitmentMessage()
+        startRecruitment()
     else
         toggleButton.Text = "🔴 Recrutamento Desativado"
         toggleButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
